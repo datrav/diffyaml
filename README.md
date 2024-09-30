@@ -2,6 +2,8 @@
 # diffyaml
 A simple tool for comparing yaml files
 Shows changes containing the full path of nested parameters
+## Preinstall
+Install **yq** tool if non installed [https://github.com/mikefarah/yq](https://github.com/mikefarah/yq?tab=readme-ov-file#install)
 ## Install
 clone repo
 ```bash

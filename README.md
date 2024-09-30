@@ -29,3 +29,71 @@ After that you can use it from command line in any place as:
 ```bash
 diffyaml someyamlfile1.yaml someyamlfile2.yaml
 ```
+
+## Example
+
+file1.yaml
+```yaml
+version: 2.1
+
+# Define the jobs we want to run for this project
+jobs:
+  build:
+    docker:
+      - image: cimg/base:2023.03
+    steps:
+      - checkout
+      - run: echo "this is the build job"
+  test:
+    docker:
+      - image: cimg/base:2023.03
+    steps:
+      - checkout
+      - run: echo "this is the test job"
+
+# Orchestrate our job run sequence
+workflows:
+  build_and_test:
+    jobs:
+      - build
+      - test
+
+```
+
+file2.yaml
+```yaml
+version: 2.1
+
+# Define the jobs we want to run for this project
+jobs:
+  build:
+    docker:
+      - image: cimg/base:2023.03
+    steps:
+      - checkout
+      - run: echo "this is the build job"
+  test:
+    docker:
+      - image: cimg/base:2023.04
+    steps:
+      - checkout
+      - run: echo "this is the test job"
+
+# Orchestrate our job run sequence
+workflows:
+  build_and_test:
+    jobs:
+      - build
+      - test
+```
+Run:
+```bash
+diffyaml file1.yaml file2.yaml
+```
+Result:
+```yaml
+jobs:
+  test:
+    docker:
+      - image: cimg/base:2023.04
+```
